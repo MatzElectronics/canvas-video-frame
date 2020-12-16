@@ -317,9 +317,14 @@ Copyright: 2020, all rights reserved
         
         function generateOtherIframe() {
             urlParts = [];
+            
+            let videoWidth = parseInt($('#other-width').value.replace(/[Oo]/, '0').replace(/[^0-9]/, ''));
+            let videoHeight = parseInt($('#other-height').value.replace(/[Oo]/, '0').replace(/[^0-9]/, ''));
+
             let webSite = $('#other-website').value;
             if (webSite !== '') {
                 urlParts.push('website=' + encodeURI(webSite));
+                videoHeight += 50;
             }
             
             let posterSrc = $('#other-poster').value;
@@ -332,12 +337,10 @@ Copyright: 2020, all rights reserved
                 urlParts.push('source=' + encodeURI(videoSrc));
             }
             
-            let videoWidth = $('#other-width').value.replace(/[Oo]/, '0').replace(/[^0-9]/, '');
-            let videoHeight = $('#other-height').value.replace(/[Oo]/, '0').replace(/[^0-9]/, '');
             let videoOptions = $('#other-options').value;
             videoOptions = videoOptions === 'none' ? '' : videoOptions;
             
-            let embedHtml = `<iframe ${videoWidth === '' ? '' : 'width="' + videoWidth + '" '}${videoHeight === '' ? '' : 'height="' + videoHeight + '" '} src="https://matzelectronics.github.io/canvas-video-frame/player.html?${urlParts.join('&') + videoOptions}" allowfullscreen="allowfullscreen"/>`;
+            let embedHtml = `<iframe style="border:none;" ${videoWidth === '' ? '' : 'width="' + videoWidth + '" '}${videoHeight === '' ? '' : 'height="' + videoHeight + '" '} src="https://matzelectronics.github.io/canvas-video-frame/player.html?${urlParts.join('&') + videoOptions}" allowfullscreen="allowfullscreen"/>`;
             
             $('#other-iframe').value = embedHtml;
 //videoTest.html?poster=https://image.pbs.org/poster_images/assets/media/PrevImageP7.png&source=https://d43fweuh3sg51.cloudfront.net/media/media_files/0d83ef92-65ad-4b54-bd77-2dd1b4b886c2/8c968241-5b62-4d4a-804d-055e90b47b4c-432p-1100k.m3u8&langs=true&website=https://opb.pbslearningmedia.org/resource/c221a090-a656-4e19-a97c-f1164d3694e9/pitch-and-frequency-unc-tv-science-video
