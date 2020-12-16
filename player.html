@@ -1,0 +1,122 @@
+<html>
+
+<head>
+    <link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            overflow-y: hidden;
+            font-family: sans-serif;
+            font-size: 12px;
+            line-height: 14px;
+        }
+        
+        #player-container {
+            width: 100%;
+            height: 100vh;
+        }
+        
+        #info-link {
+            background: black;
+            padding: 5px;
+            color: white;
+        }
+        
+        .link-text {
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 5px;
+            background: #333;
+        }
+        
+        .link-text:hover {
+            background: #555;
+        }
+        
+        .link-text>a,
+        .link-text>a:hover,
+        .link-text>a:active,
+        .link-text>a:visited {
+            color: aliceblue;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div id="player-container">
+    <video id="my-video" class="video-js" controls preload="auto" poster="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2015/11/ispinner.jpg" data-setup="{}">
+        <source src="https://s3.amazonaws.com/freestock-transcoded-videos-prod/transcoded/freestock_v308644.mp4" type="video/mp4" />
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a
+            web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            or click the link below to view this video on it&apos;s original website.
+        </p>
+    </video>
+    </div>
+    <div id="info-link"></div>
+    <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+
+    <script>
+        var video = videojs('my-video', {
+            fill: true,
+            responsive: true
+        });
+
+        var urlParams = new URLSearchParams(window.location.search);
+
+        var mimeType = 'video/mp4';
+
+        var videoSrc = urlParams.get('source');
+
+        if (videoSrc.endsWith('.m3u8')) mimeType = 'video/x-mpegURL';
+        if (videoSrc.endsWith('.ogg')) mimeType = 'video/ogg';
+        if (videoSrc.endsWith('.webm')) mimeType = 'video/webm';
+        if (videoSrc.endsWith('.mov')) mimeType = 'video/quicktime';
+        if (videoSrc.endsWith('.flv')) mimeType = 'video/x-flv';
+        if (videoSrc.endsWith('.avi')) mimeType = 'video/x-msvideo';
+        if (videoSrc.endsWith('.wmv')) mimeType = 'video/x-ms-wmv';
+        if (videoSrc.endsWith('.mkv')) mimeType = 'video/x-matroska';
+        if (videoSrc.endsWith('.m2ts') || videoSrc.endsWith('.mts')) mimeType = 'video/mp2t';
+
+        video.poster(urlParams.get('poster'));
+        video.src({
+            type: mimeType,
+            src: videoSrc
+        });
+        
+        var webSite = urlParams.get('website')
+
+        if (webSite) {
+            var hasCaptions = urlParams.get('captions');
+            var hasLangs = urlParams.get('langs');
+            
+            document.getElementById('player-container').style.height = 'calc(100vh - 80px)';
+
+            infoElement = document.getElementById('info-link');
+            infoElement.style.height = '80px';
+            
+            var infoText = 'For ';
+            if (hasCaptions || hasLangs) {
+                if (hasCaptions && !hasLangs) {
+                    infoText += 'captions or ';
+                } else if (!hasCaptions && hasLangs) {
+                    infoText += 'other languages or ';
+                } else {
+                    infoText += 'captions, other languages, or '
+                }
+            }
+            infoElement.innerHTML = `<div class='link-text'><a href="${webSite}" target="_blank" rel="noopener noreferrer">${infoText} additional information<br>click here to watch this video on its original website.</a><div>`;
+            
+
+        }
+        //https://image.pbs.org/poster_images/assets/media/PrevImageP7.png
+        //https://d43fweuh3sg51.cloudfront.net/media/media_files/0d83ef92-65ad-4b54-bd77-2dd1b4b886c2/8c968241-5b62-4d4a-804d-055e90b47b4c-432p-1100k.m3u8
+
+    </script>
+
+</body>
+<html>
