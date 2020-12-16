@@ -1,0 +1,335 @@
+<html>
+<!--
+
+This software is for use by permission only.
+For inquiries or permission, please contact me at matt dot m dot matz at gmail dot com.
+Author: Matthew Matz (@MatzElectronics)
+Copyright: 2020, all rights reserved
+
+-->
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #777;
+        }
+
+        nav li {
+            float: left;
+            border-right: 1px solid #bbb;
+            background-color: #333;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        /* Change the link color to #111 (black) on hover */
+        nav li a:hover {
+            background-color: #559;
+        }
+
+        .panel {
+            padding: 20px;
+        }
+
+        table {
+            margin-top: 20px;
+        }
+
+        th {
+            font-weight: 700;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+
+        textarea {
+            padding: 0.25em;
+            border-radius: 0.5em;
+            background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+            border-color: #aaa;
+            box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+        }
+
+        input[type=text] {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #444;
+            line-height: 1.3;
+            padding: .6em 1.4em .5em .8em;
+            border-radius: 0.5em;
+            background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+            border: 1px solid #aaa;
+            box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+        }
+
+        input[type=file] {
+            display: none;
+        }
+
+        .button-css {
+            width: fit-content;
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #444;
+            line-height: 1.3;
+            padding: .6em 1.4em .5em .8em;
+            margin: 15px 0 0 0;
+            border: 1px solid #aaa;
+            box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+            border-radius: .5em;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            background-image: linear-gradient(to bottom, #eee 0%, #ddd 100%);
+            background-repeat: repeat;
+        }
+
+        .button-css:hover {
+            filter: brightness(0.9);
+        }
+
+        .button-css:active {
+            filter: brightness(0.8);
+        }
+
+        .button-css:disabled {
+            filter: brightness(1.1);
+            color: #bbb;
+            border-color: #ccc;
+        }
+
+        /* class applies to select element itself, not a wrapper element */
+        .select-css {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #444;
+            line-height: 1.3;
+            padding: .6em 1.4em .5em .8em;
+            margin: 15px 0 0 0;
+            border: 1px solid #aaa;
+            box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+            border-radius: .5em;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+                linear-gradient(to bottom, #eee 0%, #ddd 100%);
+            background-repeat: no-repeat, repeat;
+            /* arrow icon position (1em from the right, 50% vertical) , then gradient position*/
+            background-position: right .7em top 50%, 0 0;
+            /* icon size, then gradient */
+            background-size: .65em auto, 100%;
+        }
+
+        /* Hide arrow icon in IE browsers */
+        .select-css::-ms-expand {
+            display: none;
+        }
+
+        .select-css:hover {
+            border-color: #888;
+        }
+
+        .select-css:focus {
+            border-color: #aaa;
+            box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+            box-shadow: 0 0 0 3px -moz-mac-focusring;
+            color: #222;
+            outline: none;
+        }
+
+        .select-css option {
+            font-weight: normal;
+        }
+
+        footer {
+            position: sticky;
+            top: 100vh;
+            padding: 10px 20px;
+            background-color: #bbb;
+            color: #555;
+            font-size: 11px;
+        }
+
+        footer a {
+            color: #444;
+            text-decoration: none;
+        }
+
+        footer b,
+        footer b a {
+            color: #111;
+        }
+
+        #zoom-non-match {
+            padding: 10px;
+            background: #ffa;
+            display: none;
+        }
+
+        span.canvas-absent-data {
+            font-size: 13px;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li id="youtube-tab"><a onclick="navTo('youtube');">YouTube or Vimeo</a></li>
+            <li id="others-tab"><a onclick="navTo('others');">PBS LearningMedia and others</a></li>
+        </ul>
+    </nav>
+
+    <div id="youtube" class="panel">
+        <h2>Youtube/Vimeo embed setup:</h2>
+        <table>
+            <tr>
+                <td>Video Link: </td>
+                <td colspan="3"><input id="yt-link" type="text" size="35" /></td>
+            </tr>
+            <tr>
+                <td>Width: </td>
+                <td><input id="yt-width" type="text" size="8" value="560" /></td>
+                <td>Height: </td>
+                <td><input id="yt-height" type="text" size="8" value="315" /></td>
+            </tr>
+            <tr>
+                <td>Start (MM:SS): </td>
+                <td><input id="yt-start" type="text" size="8" /></td>
+                <td>End (MM:SS): </td>
+                <td><input id="yt-end" type="text" size="8" /></td>
+            </tr>
+        </table>
+
+        <button class="button-css" onclick="generateYoutubeIframe();">Generate embed HTML</button>
+        <br>
+        <hr>
+        <br>
+        <textarea id="youtube-iframe" wrap="off" cols="30" rows="5"></textarea>
+        <br>
+        <button class="button-css" onclick="copyToClipboard('youtube-iframe');">Copy embed HTML to clipboard</button>
+        <button class="button-css" onclick="preview('youtube-iframe', 'youtube-preview');">Preveiw</button>
+        <br><br>
+        <div id="youtube-preview"></div>
+    </div>
+
+    <div id="others" class="panel">
+        <h2>PBS or Other website embed setup:</h2>
+        <a href="https://youtu.be/iPctJbJmYGo" target="_blank" rel="noreferrer nofollow">How to find this info: instructional video</a>
+        <table>
+            <tr>
+                <td>Website (Optional): </td>
+                <td colspan="3"><input id="other-website" type="text" size="35" /></td>
+            </tr>
+            <tr>
+                <td>Poster Image: </td>
+                <td colspan="3"><input id="other-poster" type="text" size="35" /></td>
+            </tr>
+            <tr>
+                <td>Video Source: </td>
+                <td colspan="3"><input id="other-source" type="text" size="35" /></td>
+            </tr>
+            <tr>
+                <td>Width: </td>
+                <td><input id="other-width" type="text" size="8" value="560" /></td>
+                <td>Height: </td>
+                <td><input id="other-height" type="text" size="8" value="315" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">Available Options<br>on Source Site:</td>
+                <td colspan="2">
+                    <select id="other-options" class="select-css">
+                        <option value="none" selected>None</option>
+                        <option value="&captions=true&lang=true">Captions and Other Languages</option>
+                        <option value="&lang=true">Other Languages</option>
+                        <option value="&captions=true">Captions</option>
+                    </select>
+                </td>
+            </tr>            
+        </table>
+
+        <button class="button-css" onclick="generateOtherIframe();">Generate embed HTML</button>
+        <br>
+        <hr>
+        <br>
+        <textarea id="other-iframe" wrap="off" cols="30" rows="5"></textarea>
+        <br>
+        <button class="button-css" onclick="copyToClipboard('other-iframe');">Copy embed HTML to clipboard</button>
+        <button class="button-css" onclick="preview('other-iframe', 'other-preview');">Preveiw</button>
+        <br><br>
+        <div id="other-preview"></div>
+    </div>
+
+    <footer>
+        <b>Canvas LMS Embedded Video Player</b> - <a href="https://github.com/MatzElectronics" target="_blank">Matthew Matz</a> &copy;2020. All rights reserved.
+    </footer>
+    <script>
+        function $(e) {
+            return document.querySelector(e);
+        }
+
+        function navTo(panelId) {
+            let panels = document.querySelectorAll('.panel');
+            let tabs = document.querySelectorAll('nav li');
+
+            for (let i = 0; i < panels.length; i++) {
+                panels[i].style.display = 'none';
+            }
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].style.backgroundColor = '#333';
+            }
+
+            if (panelId) {
+                $('#' + panelId).style.display = 'block';
+                $('#' + panelId + '-tab').style.backgroundColor = '#337';
+            }
+        }
+
+        navTo('youtube');
+        
+        function generateOtherIframe() {
+            let webSite = $('#other-website').value;
+            let posterSrc = $('#other-poster').value;
+            let videoSrc = $('#other-source').value;
+            let videoWidth = $('#other-width').value.replace(/[Oo]/, '0').replace(/[^0-9]/, '');
+            let videoHeight = $('#other-height').value.replace(/[Oo]/, '0').replace(/[^0-9]/, '');
+            let videoSrc = $('#other-options').value;
+            videoSrc = videoSrc === 'none' ? '' : videoSrc;
+            
+            `<iframe ${videoWidth === '' ? '' : 'width="' + videoWidth + '" '}${videoHeight === '' ? '' : 'height="' + videoHeight + '" '} src=""/>`;
+//videoTest.html?poster=https://image.pbs.org/poster_images/assets/media/PrevImageP7.png&source=https://d43fweuh3sg51.cloudfront.net/media/media_files/0d83ef92-65ad-4b54-bd77-2dd1b4b886c2/8c968241-5b62-4d4a-804d-055e90b47b4c-432p-1100k.m3u8&langs=true&website=https://opb.pbslearningmedia.org/resource/c221a090-a656-4e19-a97c-f1164d3694e9/pitch-and-frequency-unc-tv-science-video
+        }
+
+    </script>
+
+</body>
+
+</html>
