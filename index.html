@@ -350,7 +350,7 @@ Copyright: 2020, all rights reserved
             }
             
             let myRegexp = /(\?v=|youtu.be\/|vimeo.com\/)(.*?)(&|$)/g;
-            let videoId = myRegexp.exec(videoSrc)[1];
+            let videoId = myRegexp.exec(videoSrc)[2];
             
             let embedHtml = '';
             if (isYoutube) {
