@@ -235,7 +235,7 @@ Copyright: 2020, all rights reserved
         <br>
         <textarea id="youtube-iframe" wrap="off" cols="30" rows="5"></textarea>
         <br>
-        <button class="button-css" onclick="copyToClipboard('youtube-iframe');">Copy embed HTML to clipboard</button>
+        <button class="button-css" onclick="copyToClipboard(this, 'youtube-iframe');">Copy embed HTML to clipboard</button>
         <button class="button-css" onclick="preview('youtube-iframe', 'youtube-preview');">Preveiw</button>
         <br><br>
         <div id="youtube-preview"></div>
@@ -280,9 +280,9 @@ Copyright: 2020, all rights reserved
         <br>
         <hr>
         <br>
-        <textarea id="other-iframe" wrap="off" cols="30" rows="5"></textarea>
+        <textarea id="other-iframe" cols="30" rows="5"></textarea>
         <br>
-        <button class="button-css" onclick="copyToClipboard('other-iframe');">Copy embed HTML to clipboard</button>
+        <button class="button-css" onclick="copyToClipboard(this, 'other-iframe');">Copy embed HTML to clipboard</button>
         <button class="button-css" onclick="preview('other-iframe', 'other-preview');">Preveiw</button>
         <br><br>
         <div id="other-preview"></div>
@@ -316,16 +316,46 @@ Copyright: 2020, all rights reserved
         navTo('youtube');
         
         function generateOtherIframe() {
+            urlParts = [];
             let webSite = $('#other-website').value;
+            if (webSite !== '') {
+                urlParts.push('website=' + encodeURI(webSite));
+            }
+            
             let posterSrc = $('#other-poster').value;
+            if (posterSrc !== '') {
+                urlParts.push('poster=' + encodeURI(posterSrc));
+            }
+            
             let videoSrc = $('#other-source').value;
+            if (videoSrc !== '') {
+                urlParts.push('source=' + encodeURI(videoSrc));
+            }
+            
             let videoWidth = $('#other-width').value.replace(/[Oo]/, '0').replace(/[^0-9]/, '');
             let videoHeight = $('#other-height').value.replace(/[Oo]/, '0').replace(/[^0-9]/, '');
-            let videoSrc = $('#other-options').value;
-            videoSrc = videoSrc === 'none' ? '' : videoSrc;
+            let videoOptions = $('#other-options').value;
+            videoOptions = videoOptions === 'none' ? '' : videoOptions;
             
-            `<iframe ${videoWidth === '' ? '' : 'width="' + videoWidth + '" '}${videoHeight === '' ? '' : 'height="' + videoHeight + '" '} src=""/>`;
+            let embedHtml = `<iframe ${videoWidth === '' ? '' : 'width="' + videoWidth + '" '}${videoHeight === '' ? '' : 'height="' + videoHeight + '" '} src="https://matzelectronics.github.io/canvas-video-frame/player.html?${urlParts.join('&') + videoOptions}" allowfullscreen="allowfullscreen"/>`;
+            
+            $('#other-iframe').value = embedHtml;
 //videoTest.html?poster=https://image.pbs.org/poster_images/assets/media/PrevImageP7.png&source=https://d43fweuh3sg51.cloudfront.net/media/media_files/0d83ef92-65ad-4b54-bd77-2dd1b4b886c2/8c968241-5b62-4d4a-804d-055e90b47b4c-432p-1100k.m3u8&langs=true&website=https://opb.pbslearningmedia.org/resource/c221a090-a656-4e19-a97c-f1164d3694e9/pitch-and-frequency-unc-tv-science-video
+        }
+        
+        function copyToClipboard(sender, elem) {
+            let originalText = sender.innerHTML;
+            sender.innerHTML = 'Copied';
+            setTimeout(() => {
+                sender.innerHTML = originalText;
+            }, 1000);
+            
+            $('#' + elem).select();
+            document.execCommand('copy');
+        }
+        
+        function preview(fromElem, toElem) {
+            $('#' + toElem).innerHTML = $('#' + fromElem).value;
         }
 
     </script>
