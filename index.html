@@ -233,7 +233,7 @@ Copyright: 2020, all rights reserved
         <br>
         <hr>
         <br>
-        <textarea id="youtube-iframe" wrap="off" cols="30" rows="5"></textarea>
+        <textarea id="youtube-iframe" cols="30" rows="5"></textarea>
         <br>
         <button class="button-css" onclick="copyToClipboard(this, 'youtube-iframe');">Copy embed HTML to clipboard</button>
         <button class="button-css" onclick="preview('youtube-iframe', 'youtube-preview');">Preveiw</button>
@@ -321,7 +321,7 @@ Copyright: 2020, all rights reserved
             let videoHeight = parseInt($('#yt-height').value.replace(/[Oo]/, '0').replace(/[^0-9]/, '') || '315');
             let videoStart = $('#yt-start').value.replace(/[Oo]/, '0').replace(/[^0-9:]/, '').split(':');
             let videoEnd = $('#yt-end').value.replace(/[Oo]/, '0').replace(/[^0-9:]/, '').split(':');
-
+            
             let isYoutube = (videoSrc.indexOf('outu') > -1);
             let isVimeo = (videoSrc.indexOf('vimeo') > -1);
 
@@ -330,8 +330,11 @@ Copyright: 2020, all rights reserved
             } else {
                 if (videoStart[0] !== '') {
                     videoStart = parseInt(videoStart[0]);
+                } else {
+                    videoStart = '';
                 }
             }
+            
             if (videoStart !== '' && isYoutube) {
                 videoStart = '&start=' + videoStart;
             } else if (videoStart !== '' && isVimeo) {
@@ -343,6 +346,8 @@ Copyright: 2020, all rights reserved
             } else {
                 if (videoEnd[0] !== '') {
                     videoEnd = parseInt(videoEnd[0]);
+                } else {
+                    videoEnd = '';
                 }
             }
             if (videoEnd !== '' && isYoutube) {
@@ -354,7 +359,7 @@ Copyright: 2020, all rights reserved
             
             let embedHtml = '';
             if (isYoutube) {
-                embedHtml = `<iframe src="https://www.youtube.com/embed/${videoId + videoStart + videoEnd}" width="${videoWidth}" height="${videoHeight}" allowfullscreen="allowfullscreen" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>`;
+                embedHtml = `<iframe src="https://www.youtube.com/embed/${videoId + (videoStart + videoEnd).replace(/&/,'?')}" width="${videoWidth}" height="${videoHeight}" allowfullscreen="allowfullscreen" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>`;
             } else if (isVimeo) {
                 embedHtml = `<iframe src="https://player.vimeo.com/video/${videoId + videoStart}" width="${videoWidth}" height="${videoHeight}" allowfullscreen="allowfullscreen" frameborder="0"></iframe>`;
             }
