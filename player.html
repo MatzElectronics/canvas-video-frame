@@ -81,13 +81,13 @@
 
 
         var paramAutoplay = urlParams.get('autoplay');
-        paramAutoplay = ((paramAutoplay === 'true' || paramAutoplay === '1') : true ? false);
+        paramAutoplay = ((paramAutoplay === 'true' || paramAutoplay === '1') ? true : false);
         
         var paramLoop = urlParams.get('loop');
-        paramLoop = ((paramLoop === 'true' || paramLoop === '1') : true ? false);
+        paramLoop = ((paramLoop === 'true' || paramLoop === '1') ? true : false);
 
         var paramControls = urlParams.get('controls');
-        paramControls = ((paramControls === 'false' || paramControls === '0') : false ? true);
+        paramControls = ((paramControls === 'false' || paramControls === '0') ? false : true);
         
         var videoOptions = {
             fill: true,
