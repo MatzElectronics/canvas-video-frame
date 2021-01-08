@@ -63,11 +63,6 @@
     <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
 
     <script>
-        var video = videojs('my-video', {
-            fill: true,
-            responsive: true
-        });
-
         var urlParams = new URLSearchParams(window.location.search);
 
         var mimeType = 'video/mp4';
@@ -84,13 +79,26 @@
         if (videoSrc.endsWith('.mkv')) mimeType = 'video/x-matroska';
         if (videoSrc.endsWith('.m2ts') || videoSrc.endsWith('.mts')) mimeType = 'video/mp2t';
 
+        var paramAutoplay = urlParams.get('autoplay');
+        var paramLoop = urlParams.get('loop');
+        var paramControls = urlParams.get('controls');
+
+        var video = videojs('my-video', {
+            fill: true,
+            responsive: true,
+            preload: "auto",
+            controls: ((paramControls === 'false' || paramControls === '0') : false ? true),
+            autoplay: ((paramAutoplay === 'true' || paramAutoplay === '1') : true ? false),
+            loop: ((paramLoop === 'true' || paramLoop === '1') : true ? false),
+        });
+        
         video.poster(urlParams.get('poster'));
         video.src({
             type: mimeType,
             src: videoSrc
         });
         
-        var webSite = urlParams.get('website')
+        var webSite = urlParams.get('website');
 
         if (webSite) {
             var hasCaptions = urlParams.get('captions');
