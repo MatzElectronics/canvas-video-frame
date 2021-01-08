@@ -79,19 +79,23 @@
         if (videoSrc.endsWith('.mkv')) mimeType = 'video/x-matroska';
         if (videoSrc.endsWith('.m2ts') || videoSrc.endsWith('.mts')) mimeType = 'video/mp2t';
 
+
         var paramAutoplay = urlParams.get('autoplay');
+        paramAutoplay = ((paramAutoplay === 'true' || paramAutoplay === '1') : true ? false);
+        
         var paramLoop = urlParams.get('loop');
+        paramLoop = ((paramLoop === 'true' || paramLoop === '1') : true ? false);
+
         var paramControls = urlParams.get('controls');
+        paramControls = ((paramControls === 'false' || paramControls === '0') : false ? true);
         
         var videoOptions = {
             fill: true,
             responsive: true,
             preload: "auto",
-            /*
-            controls: ((paramControls === 'false' || paramControls === '0') : false ? true),
-            autoplay: ((paramAutoplay === 'true' || paramAutoplay === '1') : true ? false),
-            loop: ((paramLoop === 'true' || paramLoop === '1') : true ? false),
-            */
+            controls: paramControls,
+            autoplay: paramAutoplay,
+            loop: paramLoop,
         }
 
         var video = videojs('my-video', videoOptions);
